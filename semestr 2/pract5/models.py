@@ -40,13 +40,9 @@ class ImageInfo:
 class Sprite:
 
     def __init__(self, pos, vel, angle, ang_vel, image, info):
-        # Позиция
         self._pos = [pos[0], pos[1]]
-        # Скорость
         self._vel = [vel[0], vel[1]]
-        # Угол текущий
         self._angle = angle
-        # Угол вращения
         self._angle_vel = ang_vel
 
         self._image = image
