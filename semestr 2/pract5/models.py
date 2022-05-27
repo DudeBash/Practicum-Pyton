@@ -1,5 +1,3 @@
-"""Модуль с основными моделями для игры"""
-
 import math
 from util import angle_to_vector
 
@@ -7,11 +5,7 @@ WIDTH, HEIGHT = (800,) * 2
 
 
 class ImageInfo:
-    """
-    Класс с информацией об изображении
-    Аргументы: центр, размер, радиус,
-    """
-
+    
     def __init__(self, center, size, radius=0, lifespan=None, animated=False):
         self._center = center
         self._size = size
@@ -44,10 +38,6 @@ class ImageInfo:
 
 
 class Sprite:
-    """
-    Класс спрайта.
-    Используется для метеоритов, взрывов и пуль
-    """
 
     def __init__(self, pos, vel, angle, ang_vel, image, info):
         # Позиция
@@ -76,9 +66,7 @@ class Sprite:
         return self._radius
 
     def draw(self, canvas):
-        """Отрисовка спрайта взрыва/метеорита на канвасе"""
-
-        # Если это анимированный взрыв
+       
         if self._animated:
             canvas.draw_image(
                 self._image,
@@ -92,7 +80,7 @@ class Sprite:
                 self._angle,
             )
 
-        # Если это обыкновенный метеорит или пуля (без анимации)
+       
         else:
             canvas.draw_image(
                 self._image,
@@ -104,13 +92,8 @@ class Sprite:
             )
 
     def update(self):
-        """
-        Обновление атрибутов спрайта
-        - Угол
-        - Позиция
-        - Время жизни (для анимации)
-        """
-        # Угол вращения
+   
+       
         self._angle += self._angle_vel
         self._pos[0] = (self._pos[0] + self._vel[0]) % WIDTH
         self._pos[1] = (self._pos[1] + self._vel[1]) % HEIGHT
@@ -121,35 +104,30 @@ class Sprite:
         return False
 
     def collide(self, other_object):
-        """
-        Столкновение с другим объектом
-        """
-
-        # Теорема Пифагора
+      
         dist = math.pow((self.position[0] - other_object.position[0]), 2) + math.pow(
             (self.position[1] - other_object.position[1]), 2
         )
         dist = math.pow(dist, 0.5)
 
-        # Было столкновение
         if self._radius + other_object.radius > dist:
             return True
 
-        # Не было столкновения
+     
         return False
 
 
 class SpaceShip:
-    """Класс космического корабля"""
+    
 
     def __init__(self, pos, vel, angle, image, info):
-        # Позиция
+        
         self._pos = [pos[0], pos[1]]
-        # Скорость
+        
         self._vel = [vel[0], vel[1]]
-        # Угол текущий
+        
         self._angle = angle
-        # Угол вращения
+       
         self._angle_vel = 0
 
         self._image = image
@@ -159,11 +137,8 @@ class SpaceShip:
         self._ismove = False
 
     def draw(self, canvas):
-        """Отрисовка корабля"""
-
-        # Если перемещаемся вперед, то отображаем изображение с огнем
         if self._ismove:
-            # Размер корабля в пикселях
+            
             t = 90
             canvas.draw_image(
                 self._image,
@@ -173,7 +148,7 @@ class SpaceShip:
                 self._image_size,
                 self._angle,
             )
-        # Если не перемещаемся, то отображаем изображения корабля без огня
+
         else:
             canvas.draw_image(
                 self._image,
@@ -185,10 +160,7 @@ class SpaceShip:
             )
 
     def update(self):
-        """
-        Обновление атрибутов корабля
-        Изменение его позиции и вращения за счет угла _angle
-        """
+
 
         self._angle += self._angle_vel
         self._pos[0] = (self._pos[0] + self._vel[0]) % WIDTH
@@ -196,17 +168,14 @@ class SpaceShip:
 
         fv = angle_to_vector(self._angle)
 
-        # Если перемещаемся
         if self._ismove:
             self._vel[0] += fv[0] / 10
             self._vel[1] += fv[1] / 10
 
-        # Скорость перемещения
         self._vel[0] *= 1 - 0.001
         self._vel[1] *= 1 - 0.001
 
     def shoot(self, started, bullet_group, bullet_image, bullet_info):
-        """Стрельба"""
 
         if not started:
             return
@@ -223,15 +192,12 @@ class SpaceShip:
         return bullet_group
 
     def incAv(self):
-        """Поворот влево"""
         self._angle_vel -= 0.1
 
     def decAv(self):
-        """Поворот вправо"""
         self._angle_vel += 0.1
 
     def setAv(self):
-        """Окончание поворота влево/вправо"""
         self._angle_vel = 0
 
     @property
