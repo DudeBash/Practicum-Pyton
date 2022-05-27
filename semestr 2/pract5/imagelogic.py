@@ -4,8 +4,6 @@ import TKinter as tkinter
 
 class ImageStorage:
 
-    """Хранение информации об изображении и самого изображения"""
-
     def __init__(self, image_info, image):
 
         if not isinstance(image_info, ImageInfo):
