@@ -6,7 +6,6 @@ from models import ImageInfo, SpaceShip, Sprite
 from util import dist
 from imagelogic import ImageStorage
 
-# Константы
 WIDTH, HEIGHT = (800,) * 2
 SCORE = 0
 LIVES = 3
